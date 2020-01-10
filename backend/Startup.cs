@@ -36,7 +36,7 @@ namespace BackEnd
                 options.AddPolicy("MyCors", 
                     builder => 
                     {
-                        builder.WithOrigins("http://localhost:4200", "https://www.MyProductionStatus.com")
+                        builder.WithOrigins("http://myproductionstatus.s3-website.us-east-2.amazonaws.com", "https://www.MyProductionStatus.com")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
