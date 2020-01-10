@@ -1,11 +1,9 @@
-﻿using System.Net;
-using System.Text;
+﻿using System.Text;
 using AutoMapper;
 using BackEnd.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -36,10 +34,13 @@ namespace BackEnd
             services.AddCors(options =>
             {
                 options.AddPolicy("MyCors", 
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .AllowCredentials() 
+                    builder => 
+                    {
+                        builder.WithOrigins("http://localhost:4200", "https://www.MyProductionStatus.com")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                    }
                 );
             });
             services.AddAutoMapper(typeof(Startup));
@@ -57,10 +58,6 @@ namespace BackEnd
                         ValidateAudience = false
                     };
                 });
-            services.Configure<ForwardedHeadersOptions>(options =>
-                {
-                    options.KnownProxies.Add(IPAddress.Parse("10.0.0.100"));
-                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,10 +73,7 @@ namespace BackEnd
                 app.UseHsts();
             }
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-                {
-                    ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-                });
+            // app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
         }
