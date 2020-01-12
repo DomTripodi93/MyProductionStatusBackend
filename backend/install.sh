@@ -6,6 +6,7 @@ sudo apt-get update
 sudo apt-get install dotnet-sdk-2.2
 dotnet build -c Release
 cp -P appsettings.json ./bin/Release/netcoreapp2.2
+sudo cp -P default /etc/nginx/sites-available/default
 
 sudo apt install nginx
 sudo service nginx start
