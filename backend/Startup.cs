@@ -26,7 +26,7 @@ namespace BackEnd
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(x => x.UseMySql(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(opt => {
                     opt.SerializerSettings.ReferenceLoopHandling = 
@@ -37,7 +37,7 @@ namespace BackEnd
                 options.AddPolicy("MyCors", 
                     builder => 
                     {
-                        builder.WithOrigins("http://myproductionstatus.s3-website.us-east-2.amazonaws.com", "https://www.MyProductionStatus.com")
+                        builder.WithOrigins("https://myproductionmanager.firebaseapp.com", "https://www.MyProductionStatus.com")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
@@ -73,10 +73,6 @@ namespace BackEnd
             {
                 app.UseHsts();
             }
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
             // app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();
