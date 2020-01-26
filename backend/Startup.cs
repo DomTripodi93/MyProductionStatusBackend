@@ -44,7 +44,7 @@ namespace ProBackend
                 options.AddPolicy("MyCors",
                     builder =>
                     {
-                        builder.WithOrigins("https://myproductionmanager.firebaseapp.com", "https://www.MyProductionStatus.com")
+                        builder.WithOrigins("https://myproductionmanager.firebaseapp.com", "https://www.MyProductionStatus.com", "https://MyProductionStatus.com")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();
