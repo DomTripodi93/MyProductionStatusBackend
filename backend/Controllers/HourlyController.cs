@@ -118,6 +118,7 @@ namespace BackEnd.Controllers
             return Ok(hourlySet);
         }
 
+
         [HttpGet("job={job}&op={op}&date={date}&machine={mach}")]
         public async Task<IActionResult> GetHourlySetByDateMachineAndJob(int userId, string date, string mach, string job, string op)
         {
